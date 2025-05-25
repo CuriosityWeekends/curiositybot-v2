@@ -2,7 +2,6 @@
 
 ### 📄 `http-servo-endpoint.md`
 
-````markdown
 # 🔧 HTTP Servo Control Endpoint
 
 ## ✅ Task Summary

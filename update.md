@@ -1,36 +1,35 @@
-# 🤖 Face-Tracking Neck Movement – ESP8266 + MG996R Servo
+# 🧪 Servo Sweep Test – MG996R + ESP8266
 
-This pull request contributes to the **Neck Movement** milestone by implementing the hardware setup and control logic for rotating a servo motor (MG996R) based on face position tracked via a USB webcam.
+## ✅ Task Completed
+Successfully tested the **basic servo sweep** functionality using the MG996R servo motor connected to the **ESP8266 NodeMCU**.
 
-## 📌 What's Included
+## 🧰 Setup Details
 
-- ✅ Connected **MG996R servo** to **ESP8266 NodeMCU** using external power.
-- ✅ Verified power draw and functionality using a multimeter.
-- ✅ Shared GND between external supply and ESP (safe and stable).
-- ✅ Set up basic servo sweep test via Arduino to confirm wiring.
-- ✅ Cleaned up wiring diagram and commented code.
-- ✅ Linked this work to Milestone: **"Neck Movement"**, Issue: `#3`.
+- **Microcontroller:** ESP8266 (NodeMCU)
+- **Servo Motor:** MG996R
+- **Power Source:** External 5V/2A supply
+- **Shared GND:** Between ESP and external power
+- **Tested Pin:** D4 (GPIO2) for signal output
 
-## 💡 Next Steps
+## 🧪 What Was Done
 
-- Integrate OpenCV Python script for face tracking.
-- Map face X-coordinate to angle (e.g., 0–180°).
-- Send HTTP request to ESP8266 with servo angle.
-- Toggle system on/off via a keyboard hotkey.
+- Uploaded the standard Arduino **servo sweep example**.
+- Verified range of motion from **0° to 180°**.
+- Confirmed smooth and responsive movement.
+- Monitored **serial output** to ensure signal was correctly received and executed.
+- Used multimeter to confirm power draw remained within safe range.
 
-## 🛠️ Hardware Used
+## 🛡️ Notes
 
-- MG996R Servo Motor  
-- ESP8266 NodeMCU  
-- External 5V/2A Power Supply  
-- Logitech USB Webcam  
+- MG996R draws significant current; must avoid powering directly from ESP.
+- Ensure servo GND and ESP GND are **tied together** for reference voltage.
+- Added appropriate **delay()** in loop to avoid servo jitter.
 
-## 🔗 Related Issues
+## 🗂️ Linked To
 
-- Closes #3  
-- Part of Milestone: [Neck Movement](../../milestone/1)
+- Issue: `#4` Test Basic Servo Sweep Code
+- Milestone: [Neck Movement](../../milestone/1)
 
 ---
 
-PR created by `@hsbofficial` for [Curiosity Bot v2](https://github.com/hsbofficial/Curiosity-Bot-v2)
-
+Test conducted by `@hsbofficial` as part of the **Curiosity Bot v2** project.

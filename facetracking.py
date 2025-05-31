@@ -1,0 +1,57 @@
+import cv2
+import paho.mqtt.client as mqtt
+
+# MQTT broker details
+MQTT_BROKER = "192.168.68.130"
+MQTT_PORT = 1883
+MQTT_TOPIC = "cw/humanoid"
+
+# Setup MQTT client
+client = mqtt.Client()
+try:
+    client.connect(MQTT_BROKER, MQTT_PORT, 60)
+    client.loop_start()
+except:
+    print("Failed to connect to MQTT broker.")
+
+# Initialize camera and face detector
+cap = cv2.VideoCapture(0)
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+frame_width = int(cap.get(3))
+
+# Flag to control face tracking
+toggle = True
+
+def send_angle(angle):
+    try:
+        client.publish(MQTT_TOPIC, angle)
+    except:
+        print("Failed to publish angle to MQTT.")
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+    if toggle and len(faces) > 0:
+        x, y, w, h = faces[0]
+        face_center = x + w // 2
+        angle = int((face_center / frame_width) * 180)  # Map to 0-180 degrees
+        angle = max(0, min(180, angle))
+        send_angle(angle)
+        print(f"Face Angle: {angle}")
+
+    cv2.imshow("Frame", frame)
+    key = cv2.waitKey(1)
+    if key == ord('q'):
+        break
+    if key == ord('t'):
+        toggle = not toggle
+
+cap.release()
+cv2.destroyAllWindows()
+client.loop_stop()
+client.disconnect()
